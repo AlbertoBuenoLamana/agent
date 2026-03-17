@@ -16,12 +16,12 @@ LISTEN_PORT: 7600
 ## Instructions
 
 - All commands run locally on the engineer's machine — this is the PRIMARY device, not the sandbox
-- This device only needs the CLI client tools — it does NOT need steer, Swift, or tmux
+- This device only needs the CLI client tools — it does NOT need steer, xdotool, or tmux
 - If a dependency is already installed, skip it and note the version
 - If a step fails, stop and report the failure — do not continue blindly
 - Use `brew` for all package installations
 - Use `uv` for all Python dependency management — do NOT use pip
-- If SANDBOX_HOST is not provided, ask the user for the Mac Mini's IP or hostname
+- If SANDBOX_HOST is not provided, ask the user for the sandbox device's IP or hostname
 - The justfile `url` variable should point to `http://SANDBOX_HOST:LISTEN_PORT`
 - Do NOT modify the sandbox device — only configure this local machine
 - SSH connectivity is optional but recommended for debugging
@@ -30,9 +30,9 @@ LISTEN_PORT: 7600
 
 ### Phase 1: Install
 
-1. Check macOS version:
+1. Check OS version:
    ```
-   sw_vers
+   lsb_release -a
    ```
 
 2. Check what's already installed:
@@ -45,15 +45,15 @@ LISTEN_PORT: 7600
    - `just --version`
    - `git --version`
 
-3. Install Homebrew if missing:
+3. Install uv if missing:
    ```
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
    If already installed, skip.
 
-4. Install missing tools via Homebrew — only install what's missing:
+4. Install just if missing:
    ```
-   brew install uv just
+   curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/local/bin
    ```
 
 5. Verify the repo exists. If this command is being run from the repo, note the current path. If the repo isn't cloned yet, ask the user for the clone URL.
@@ -124,7 +124,7 @@ Present results in this format:
 
 ## Engineer Devbox: [hostname]
 
-**macOS**: [version]
+**OS**: [version]
 **Repo**: [path]
 **Sandbox target**: [SANDBOX_HOST:LISTEN_PORT]
 
@@ -132,7 +132,6 @@ Present results in this format:
 
 | Tool | Status | Version |
 |------|--------|---------|
-| Homebrew | [installed/missing] | [version] |
 | uv | [installed/missing] | [version] |
 | just | [installed/missing] | [version] |
 | git | [installed/missing] | [version] |
@@ -153,7 +152,7 @@ Present results in this format:
 **[X/6 checks passed]** — [READY / NOT READY — needs attention]
 
 If all pass: "Devbox is ready. Send jobs with `just send \"your prompt\"`."
-If listen server failed: "Sandbox listen server not running. Start it on the Mac Mini with `just listen`."
+If listen server failed: "Sandbox listen server not running. Start it on the sandbox device with `just listen`."
 If other failures: List what needs to be fixed.
 
 ### Fix It?

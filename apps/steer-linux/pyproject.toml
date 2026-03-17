@@ -1,0 +1,14 @@
+[project]
+name = "steer"
+version = "0.2.0"
+description = "Ubuntu automation CLI for AI agents. Eyes and hands on your Linux device."
+requires-python = ">=3.11"
+dependencies = [
+    "click>=8.1",
+    "pillow>=10.0",
+    "pytesseract>=0.3",
+    "psutil>=5.9",
+]
+
+[project.scripts]
+steer = "main:cli"

@@ -1,6 +1,6 @@
-"""Job worker — runs a Claude Code agent in a visible Terminal window.
+"""Job worker — runs a Claude Code agent in a tmux session.
 
-Creates a headed tmux session, sends the claude command with sentinel
+Creates a detached tmux session, sends the claude command with sentinel
 markers, polls for completion, then updates the job YAML.
 """
 
@@ -30,13 +30,12 @@ def _session_exists(name: str) -> bool:
 
 
 def _open_terminal(session_name: str, cwd: str) -> None:
-    """Open a new Terminal.app window with a tmux session attached."""
-    tmux_cmd = f"cd '{cwd}' && tmux new-session -A -s {session_name}"
-    escaped = tmux_cmd.replace("\\", "\\\\").replace('"', '\\"')
+    """Create a detached tmux session (no GUI terminal needed on Linux)."""
     subprocess.run(
-        ["osascript", "-e", f'tell application "Terminal" to do script "{escaped}"'],
+        ["tmux", "new-session", "-d", "-s", session_name, "-c", cwd],
         capture_output=True,
         text=True,
+        check=True,
     )
     # Wait for session to appear
     deadline = time.monotonic() + 5.0
@@ -121,7 +120,7 @@ def main():
     os.environ.update(env_clean)
 
     try:
-        # Open headed Terminal window with tmux session
+        # Create detached tmux session
         _open_terminal(session_name, str(repo_root))
 
         # Send the wrapped command

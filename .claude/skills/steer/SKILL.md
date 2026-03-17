@@ -1,11 +1,11 @@
 ---
 name: steer
-description: macOS GUI automation CLI. Use steer to see the screen, click elements, type text, send hotkeys, scroll, drag, manage windows and apps, run OCR on Electron apps, and wait for UI conditions.
+description: Ubuntu Linux GUI automation CLI. Use steer to see the screen, click elements, type text, send hotkeys, scroll, drag, manage windows and apps, run OCR on Electron apps, and wait for UI conditions.
 ---
 
-# Steer — macOS GUI Automation
+# Steer — Ubuntu Linux GUI Automation
 
-Binary: `apps/steer/.build/release/steer`
+Run from: `cd apps/steer-linux && uv run python main.py <command>`
 
 Run `steer --help` and `steer help <command>` to learn each command's flags before using it.
 
@@ -22,7 +22,7 @@ Run `steer --help` and `steer help <command>` to learn each command's flags befo
 | `apps`      | List, launch, or activate apps                                                                                                                                                                             |
 | `screens`   | List displays with resolution and scale                                                                                                                                                                    |
 | `window`    | Move, resize, minimize, fullscreen, close windows                                                                                                                                                          |
-| `ocr`       | Takes a screenshot and runs Vision OCR on it. Returns text with x/y positions. Use `--store` to make results clickable (O1, O2, etc.). Use when `see` returns no elements.                                 |
+| `ocr`       | Takes a screenshot and runs Tesseract OCR on it. Returns text with x/y positions. Use `--store` to make results clickable (O1, O2, etc.). Use when `see` returns no elements.                                 |
 | `focus`     | Show currently focused element                                                                                                                                                                             |
 | `find`      | Search elements by text in latest snapshot                                                                                                                                                                 |
 | `clipboard` | Read/write system clipboard                                                                                                                                                                                |
@@ -32,7 +32,7 @@ Always pass `--json` for structured output.
 
 ## How to Work
 
-You are controlling a real macOS desktop. You cannot see anything unless you explicitly look. You cannot assume anything worked unless you verify.
+You are controlling a real Ubuntu Linux desktop. You cannot see anything unless you explicitly look. You cannot assume anything worked unless you verify.
 
 ### 1. Know your environment first
 
@@ -52,8 +52,8 @@ Take a screenshot of **each screen** returned by `steer screens`. Read them. Thi
 Before interacting with any app, make sure it's the active window on the right screen:
 
 ```
-steer apps activate Safari --json
-steer see --app Safari --json        → verify it's in front, read the state
+steer apps activate Firefox --json
+steer see --app Firefox --json        → verify it's in front, read the state
 ```
 
 ### 3. One action, then observe
@@ -91,7 +91,7 @@ Before clicking anything:
 
 Both `see` and `ocr` save a screenshot PNG. The path is in the JSON output under `"screenshot"`. You can read this image file to visually inspect what's on screen.
 
-**Native apps** (Safari, Finder, Terminal): `steer see --app <name> --json` gives you the accessibility tree with labeled elements. If the element list is empty, the screenshot still exists — read it or try `--ocr` to fall back.
+**Native apps** (Firefox, Finder, Terminal): `steer see --app <name> --json` gives you the accessibility tree with labeled elements. If the element list is empty, the screenshot still exists — read it or try `--ocr` to fall back.
 
 **Electron apps** (VS Code, Slack, Notion): Accessibility trees are empty. Use OCR instead:
 
@@ -101,15 +101,15 @@ steer ocr --app "VS Code" --store --json
 
 With `--store`, OCR results become clickable elements (O1, O2, etc.).
 
-**Web pages**: Accessibility tree may be shallow. Use `steer ocr --app Safari --json` to read all visible text with positions. Use the positions to click precisely.
+**Web pages**: Accessibility tree may be shallow. Use `steer ocr --app Firefox --json` to read all visible text with positions. Use the positions to click precisely.
 
 ### 7. Waiting for things
 
 Don't assume the UI is ready after an action. Use `steer wait` or run `steer see` in a loop:
 
 ```
-steer wait --app Safari --json                     → wait for app to launch
-steer wait --for "Submit" --app Safari --json      → wait for element to appear
+steer wait --app Firefox --json                     → wait for app to launch
+steer wait --for "Submit" --app Firefox --json      → wait for element to appear
 ```
 
 ### 8. Multi-monitor awareness

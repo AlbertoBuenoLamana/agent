@@ -4,7 +4,7 @@ description: Load foundational context about the steer codebase — architecture
 
 # Purpose
 
-Understand the steer monorepo: a macOS automation framework with four apps (steer, drive, listen, direct) that give AI agents full control of a Mac via GUI and terminal automation.
+Understand the steer monorepo: a Linux automation framework with four apps (steer, drive, listen, direct) that give AI agents full control of an Ubuntu Linux device via GUI and terminal automation.
 
 ## Workflow
 
@@ -13,7 +13,7 @@ Understand the steer monorepo: a macOS automation framework with four apps (stee
    - READ `justfile`
 
 2. Read each app's config:
-   - READ `apps/steer/Package.swift`
+   - READ `apps/steer-linux/pyproject.toml`
    - READ `apps/drive/pyproject.toml`
    - READ `apps/listen/pyproject.toml`
    - READ `apps/direct/pyproject.toml`
@@ -25,10 +25,10 @@ Understand the steer monorepo: a macOS automation framework with four apps (stee
    - READ `.claude/commands/listen-drive-and-steer-user-prompt.md`
 
 4. Read entry points and agent launch config:
-   - READ `apps/steer/Sources/steer/Steer.swift`
+   - READ `apps/steer-linux/main.py`
    - READ `apps/drive/main.py`
    - READ `apps/listen/main.py`
    - READ `apps/listen/justfile`
    - READ `apps/direct/main.py`
 
-5. Summarize: purpose, architecture (4 apps), stack (Swift + Python), key patterns (observe-act-verify, sentinel protocol, job YAML tracking, element IDs), and how the pieces connect
+5. Summarize: purpose, architecture (4 apps), stack (Python), key patterns (observe-act-verify, sentinel protocol, job YAML tracking, element IDs), and how the pieces connect

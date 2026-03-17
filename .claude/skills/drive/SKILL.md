@@ -21,7 +21,7 @@ drive session list --json                                # List all sessions
 drive session kill agent-1 --json                        # Kill a session
 ```
 
-**Default is headed** — a new Terminal.app window opens attached to the session so you can watch live. Only use `--detach` when you explicitly need a headless session.
+**Default is headed** — a new terminal window opens attached to the session so you can watch live. Only use `--detach` when you explicitly need a headless session.
 
 ### run — Execute command and wait for completion
 
